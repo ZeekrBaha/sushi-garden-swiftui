@@ -7,7 +7,6 @@ xcuserdata/
 *.xcscmblueprint
 *.xccheckout
 .swiftpm/
-Package.resolved
 
 # Generated project (XcodeGen)
 *.xcodeproj
