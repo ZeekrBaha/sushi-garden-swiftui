@@ -10,6 +10,7 @@ enum FontLoader {
         guard let fontsFolder = Bundle.main.url(forResource: "Fonts", withExtension: nil) else { return }
         for name in ["Sen-Regular", "Sen-Bold", "Mugesta"] {
             let url = fontsFolder.appendingPathComponent("\(name).ttf")
+            guard FileManager.default.fileExists(atPath: url.path) else { continue }
             CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
         }
     }

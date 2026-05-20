@@ -17,4 +17,8 @@ final class FontLoaderTests: XCTestCase {
     func test_senBold_isAvailable() {
         XCTAssertNotNil(UIFont(name: "Sen-Bold", size: 16))
     }
+
+    func test_senFamily_isRegistered() {
+        XCTAssertTrue(UIFont.familyNames.contains("Sen"), "Sen font family not registered")
+    }
 }
