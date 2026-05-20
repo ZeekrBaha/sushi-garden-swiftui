@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 final class Dependencies {
     let auth: AuthService
     let menu: MenuRepository
@@ -9,7 +10,7 @@ final class Dependencies {
 
     init(launchArguments: [String] = ProcessInfo.processInfo.arguments,
          menu: MenuRepository = MenuRepository(),
-         cart: CartService = CartService(),
+         cart: CartService? = nil,
          orders: OrderStore? = nil) {
         let uiTest = launchArguments.contains("-UITEST")
         self.isUITest = uiTest
@@ -21,14 +22,9 @@ final class Dependencies {
             self.auth = FirebaseAuthService()
         }
         self.menu = menu
-        self.cart = cart
+        self.cart = cart ?? CartService()
         self.orders = orders ?? OrderStore(inMemory: uiTest)
     }
-}
-
-// TEMP-STUB: replaced in Task 2.3
-final class CartService {
-    init() {}
 }
 
 // TEMP-STUB: replaced in Task 3.1

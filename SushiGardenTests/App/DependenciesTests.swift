@@ -1,6 +1,7 @@
 import XCTest
 @testable import SushiGarden
 
+@MainActor
 final class DependenciesTests: XCTestCase {
     func test_uiTestFlag_usesFakeAuth() {
         let deps = Dependencies(launchArguments: ["-UITEST"])
