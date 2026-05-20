@@ -26,11 +26,6 @@ final class Dependencies {
     }
 }
 
-// TEMP-STUB: replaced in Task 2.2
-final class MenuRepository {
-    init() {}
-}
-
 // TEMP-STUB: replaced in Task 2.3
 final class CartService {
     init() {}
