@@ -20,7 +20,7 @@ struct CheckoutView: View {
                     field(Strings.Auth.name, $vm.name, A11y.Checkout.name)
                     field(Strings.Checkout.phone, $vm.phone, A11y.Checkout.phone, .phonePad)
                     field(Strings.Auth.email, $vm.email, A11y.Checkout.email, .emailAddress)
-                    summaryRow(Strings.Cart.sum, vm.subtotal)
+                    summaryRow(Strings.Cart.sum, vm.cartTotal)
                     summaryRow(Strings.Cart.delivery, vm.deliveryFee)
                     summaryRow(Strings.Cart.serviceFee, vm.serviceFee)
                     summaryRow(Strings.Cart.total, vm.total, bold: true)
@@ -32,6 +32,13 @@ struct CheckoutView: View {
                     }
                     .disabled(!vm.canConfirm)
                     .accessibilityIdentifier(A11y.Checkout.confirm)
+
+                    if let msg = vm.errorMessage {
+                        Text(msg)
+                            .font(AppFont.sen(12))
+                            .foregroundStyle(AppColor.accent)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
                 }
                 .padding(.horizontal, Spacing.screenMargin).padding(.top, Spacing.md)
             }

@@ -11,7 +11,7 @@ final class CheckoutViewModelTests: XCTestCase {
     }
     func test_summaryMath() {
         let vm = CheckoutViewModel(cart: filledCart(), orders: OrderStore(inMemory: true))
-        XCTAssertEqual(vm.subtotal, 707)
+        XCTAssertEqual(vm.cartTotal, 707)
         XCTAssertEqual(vm.deliveryFee, 76)
         XCTAssertEqual(vm.serviceFee, 76)
         XCTAssertEqual(vm.total, 707 + 76 + 76)
