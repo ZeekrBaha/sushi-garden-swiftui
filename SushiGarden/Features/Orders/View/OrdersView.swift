@@ -19,18 +19,25 @@ struct OrdersView: View {
                         .foregroundStyle(AppColor.textSecondary)
                         .accessibilityIdentifier(A11y.Orders.empty)
                 } else {
-                    List(vm.orders) { o in
-                        VStack(alignment: .leading) {
-                            Text(Strings.Orders.row(String(o.id.prefix(6))))
-                                .font(AppFont.productTitle)
-                                .foregroundStyle(.white)
-                            Text("\(o.totalRub) \(Strings.currency)")
-                                .foregroundStyle(AppColor.textSecondary)
+                    ScrollView {
+                        LazyVStack(spacing: 0) {
+                            ForEach(vm.orders) { o in
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(Strings.Orders.row(String(o.id.prefix(6))))
+                                        .font(AppFont.productTitle)
+                                        .foregroundStyle(.white)
+                                    Text("\(o.totalRub) \(Strings.currency)")
+                                        .foregroundStyle(AppColor.textSecondary)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal, Spacing.screenMargin)
+                                .padding(.vertical, Spacing.sm)
+                                .background(AppColor.tabBar)
+                            }
                         }
-                        .listRowBackground(AppColor.tabBar)
+                        .accessibilityElement(children: .contain)
+                        .accessibilityIdentifier(A11y.Orders.list)
                     }
-                    .scrollContentBackground(.hidden)
-                    .accessibilityIdentifier(A11y.Orders.list)
                 }
             }
             .navigationTitle(Strings.Tabs.orders)

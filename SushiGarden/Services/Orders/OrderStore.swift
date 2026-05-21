@@ -1,8 +1,9 @@
+import Combine
 import Foundation
 import SwiftData
 
 @MainActor
-final class OrderStore {
+final class OrderStore: ObservableObject {
     private let container: ModelContainer
     private var context: ModelContext { container.mainContext }
 
@@ -17,6 +18,7 @@ final class OrderStore {
         context.insert(OrderEntity(id: order.id, createdAt: order.createdAt,
                                    totalRub: order.totalRub, linesData: data))
         try context.save()
+        objectWillChange.send()
     }
 
     func allOrders() throws -> [Order] {
