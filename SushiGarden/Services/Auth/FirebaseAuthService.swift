@@ -1,9 +1,13 @@
 import Foundation
 import FirebaseAuth
+import FirebaseCore
 
 final class FirebaseAuthService: AuthService {
     var currentUser: UserProfile? {
-        Auth.auth().currentUser.map { Self.profile(from: $0) }
+        // FirebaseApp.configure() is skipped when GoogleService-Info.plist is absent
+        // (e.g. UI smoke tests). Guard against the resulting crash.
+        guard FirebaseApp.app() != nil else { return nil }
+        return Auth.auth().currentUser.map { Self.profile(from: $0) }
     }
 
     func signUp(email: String, password: String, name: String) async throws -> UserProfile {
