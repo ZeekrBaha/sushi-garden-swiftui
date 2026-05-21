@@ -29,9 +29,10 @@ final class CourierSimulator: ObservableObject {
 
     /// Drives the live tracking animation. Not used in unit tests.
     func startAnimation(updateInterval: TimeInterval = 1) {
+        stopAnimation()
         elapsedSeconds = 0
         let total = Double(etaSeconds)
-        timer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { [weak self] t in
+        let t = Timer(timeInterval: updateInterval, repeats: true) { [weak self] t in
             Task { @MainActor [weak self] in
                 guard let self else { t.invalidate(); return }
                 self.elapsedSeconds += updateInterval
@@ -39,6 +40,8 @@ final class CourierSimulator: ObservableObject {
                 if self.elapsedSeconds >= total { t.invalidate() }
             }
         }
+        RunLoop.main.add(t, forMode: .common)
+        timer = t
     }
 
     func stopAnimation() { timer?.invalidate(); timer = nil }
