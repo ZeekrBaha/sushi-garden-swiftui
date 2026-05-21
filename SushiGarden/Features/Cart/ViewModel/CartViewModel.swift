@@ -7,7 +7,6 @@ final class CartViewModel: ObservableObject {
     @Published private(set) var selectedAddOns: [AddOn] = []
     let addOns: [AddOn]
     private let cart: CartService
-    private var bag = Set<AnyCancellable>()
 
     init(cart: CartService, menu: MenuRepository) {
         self.cart = cart
@@ -21,6 +20,6 @@ final class CartViewModel: ObservableObject {
     func isSelected(_ addOn: AddOn) -> Bool { selectedAddOns.contains(addOn) }
     var subtotal: Int { cart.subtotal }
     var addOnsTotal: Int { cart.addOnsTotal }
-    var grandTotal: Int { cart.subtotal + cart.addOnsTotal }
+    var grandTotal: Int { cart.total }
     var isEmpty: Bool { items.isEmpty }
 }

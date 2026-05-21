@@ -20,13 +20,13 @@ final class CartViewModelTests: XCTestCase {
         let vm = CartViewModel(cart: cart, menu: MenuRepository())
         vm.increment(vm.items[0])
         XCTAssertEqual(cart.quantity(of: "la"), 2)
-        vm.decrement(vm.items[0]); vm.decrement(cart.items[0])
+        vm.decrement(vm.items[0]); vm.decrement(vm.items[0])
         XCTAssertTrue(cart.items.isEmpty)
     }
     func test_grandTotal_includesAddOns() {
         let cart = seededCart()
         let vm = CartViewModel(cart: cart, menu: MenuRepository())
-        vm.toggle(MenuRepository().addOns[0])     // +60
+        vm.toggle(vm.addOns[0])     // +60
         XCTAssertEqual(vm.grandTotal, 767)
     }
 }
