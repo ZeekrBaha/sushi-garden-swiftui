@@ -15,13 +15,13 @@ struct OrdersView: View {
             ZStack {
                 AppColor.background.ignoresSafeArea()
                 if vm.isEmpty {
-                    Text("Заказов пока нет")
+                    Text(Strings.Orders.empty)
                         .foregroundStyle(AppColor.textSecondary)
                         .accessibilityIdentifier(A11y.Orders.empty)
                 } else {
                     List(vm.orders) { o in
                         VStack(alignment: .leading) {
-                            Text("Заказ №\(o.id.prefix(6))")
+                            Text(Strings.Orders.row(String(o.id.prefix(6))))
                                 .font(AppFont.productTitle)
                                 .foregroundStyle(.white)
                             Text("\(o.totalRub) \(Strings.currency)")

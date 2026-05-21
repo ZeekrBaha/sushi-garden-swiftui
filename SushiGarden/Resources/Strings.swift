@@ -36,6 +36,10 @@ enum Strings {
         static let phone = "Телефон"
         static let delivery = "Доставка"
     }
+    enum Orders {
+        static let empty = "Заказов пока нет"
+        static func row(_ id: String) -> String { "Заказ №\(id)" }
+    }
     enum Profile {
         static let myOrders = "Мои заказы"
         static let cards = "Карты"
