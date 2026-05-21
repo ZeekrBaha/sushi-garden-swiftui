@@ -34,6 +34,7 @@ final class CheckoutViewModel: ObservableObject {
         guard canConfirm else { return }
         isLoading = true
         errorMessage = nil
+        defer { isLoading = false }
         let lines = cart.items.map {
             OrderLine(name: $0.product.name, quantity: $0.quantity, priceRub: $0.product.priceRub)
         }
@@ -44,7 +45,6 @@ final class CheckoutViewModel: ObservableObject {
             didConfirm = true
         } catch {
             errorMessage = "Не удалось оформить заказ"
-            isLoading = false
         }
     }
 }
