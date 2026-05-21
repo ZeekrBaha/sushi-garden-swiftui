@@ -1,4 +1,4 @@
-struct Product: Identifiable, Equatable {
+struct Product: Identifiable, Equatable, Hashable {
     let id: String
     let name: String
     let category: Category
