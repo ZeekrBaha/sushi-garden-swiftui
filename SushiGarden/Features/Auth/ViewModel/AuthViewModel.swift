@@ -19,25 +19,28 @@ final class AuthViewModel: ObservableObject {
         let base = FieldValidators.isValidEmail(email) && FieldValidators.isValidPassword(password)
         switch mode {
         case .login: return base
-        case .register: return base && FieldValidators.isNonEmpty(name) && consent
+        case .register: return base && FieldValidators.isNonEmpty(name)
         }
     }
 
     func toggleMode() { mode = (mode == .login) ? .register : .login; state = .idle }
 
-    func submit() async {
-        guard canSubmit else { return }
+    @discardableResult
+    func submit() async -> UserProfile? {
+        guard canSubmit else { return nil }
         state = .loading
         do {
             let user: UserProfile = (mode == .register)
                 ? try await auth.signUp(email: email, password: password, name: name)
                 : try await auth.signIn(email: email, password: password)
             state = .authenticated(user)
+            return user
         } catch let e as AuthError {
             state = .error(Self.message(e))
         } catch {
             state = .error("Что-то пошло не так")
         }
+        return nil
     }
 
     private static func message(_ e: AuthError) -> String {

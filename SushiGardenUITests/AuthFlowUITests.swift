@@ -9,10 +9,12 @@ final class AuthFlowUITests: XCTestCase {
         app.typeText("Саша")
         app.textFields["auth.email"].tap()
         app.typeText("a@b.ru")
-        app.secureTextFields["auth.password"].tap()
+        app.buttons["auth.password.visibility"].tap()
+        app.textFields["auth.password"].tap()
         app.typeText("123456")
         app.switches["auth.consent"].tap()
-        app.buttons["auth.submit"].tap()
+        let submit = app.buttons["auth.submit"]
+        submit.tap()
         XCTAssertTrue(app.otherElements["tabbar"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["tab.catalog"].exists)
     }

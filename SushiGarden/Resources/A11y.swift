@@ -4,6 +4,7 @@ enum A11y {
         static let nameField = "auth.name"
         static let emailField = "auth.email"
         static let passwordField = "auth.password"
+        static let passwordVisibility = "auth.password.visibility"
         static let submit = "auth.submit"
         static let toggleMode = "auth.toggleMode"
         static let consentToggle = "auth.consent"

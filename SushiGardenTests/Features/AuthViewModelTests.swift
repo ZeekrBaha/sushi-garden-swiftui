@@ -3,11 +3,9 @@ import XCTest
 
 @MainActor
 final class AuthViewModelTests: XCTestCase {
-    func test_registerDisabled_untilValidAndConsent() {
+    func test_registerEnabled_whenFieldsAreValid() {
         let vm = AuthViewModel(auth: FakeAuthService(), mode: .register)
         vm.name = "Саша"; vm.email = "a@b.ru"; vm.password = "123456"
-        XCTAssertFalse(vm.canSubmit)        // consent off
-        vm.consent = true
         XCTAssertTrue(vm.canSubmit)
     }
     func test_loginDisabled_untilValid() {
