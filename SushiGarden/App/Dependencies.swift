@@ -26,8 +26,3 @@ final class Dependencies {
         self.orders = orders ?? OrderStore(inMemory: uiTest)
     }
 }
-
-// TEMP-STUB: replaced in Task 3.1
-final class OrderStore {
-    init(inMemory: Bool = false) {}
-}
