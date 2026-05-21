@@ -4,6 +4,7 @@ struct CartView: View {
     let deps: Dependencies
     @StateObject private var vm: CartViewModel
     @State private var goCheckout = false
+    @State private var checkoutTotal: Int = 0
 
     init(deps: Dependencies) {
         self.deps = deps
@@ -29,7 +30,7 @@ struct CartView: View {
             }
             .navigationTitle(Strings.Tabs.cart)
             .navigationDestination(isPresented: $goCheckout) {
-                CheckoutView(deps: deps, total: vm.grandTotal)
+                CheckoutView(deps: deps, total: checkoutTotal)
             }
         }
         .tint(AppColor.accent)
@@ -72,7 +73,7 @@ struct CartView: View {
     }
 
     private var checkoutBar: some View {
-        Button { goCheckout = true } label: {
+        Button { checkoutTotal = vm.grandTotal; goCheckout = true } label: {
             Text("\(Strings.Cart.checkout) · \(vm.grandTotal) \(Strings.currency)")
                 .font(AppFont.sectionHeader).foregroundStyle(.white)
                 .frame(maxWidth: .infinity).padding()

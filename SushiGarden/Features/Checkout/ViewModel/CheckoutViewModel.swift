@@ -41,8 +41,8 @@ final class CheckoutViewModel: ObservableObject {
         let order = Order(id: UUID().uuidString, createdAt: Date(), totalRub: total, lines: lines)
         do {
             try orders.save(order)
-            cart.clear()
             didConfirm = true
+            cart.clear()
         } catch {
             errorMessage = "Не удалось оформить заказ"
         }
