@@ -4,11 +4,9 @@ enum AppFont {
     static func sen(_ size: CGFloat, bold: Bool = false) -> Font {
         .custom(bold ? "Sen-Bold" : "Sen-Regular", size: size)
     }
-    /// Mugesta for stepper glyphs; falls back to SF if the font is absent.
+    /// SF Rounded for stepper glyphs — same round character as the original Mugesta.
     static func mugesta(_ size: CGFloat) -> Font {
-        UIFont(name: "Mugesta", size: size) != nil
-            ? .custom("Mugesta", size: size)
-            : .system(size: size, weight: .regular)
+        .system(size: size, weight: .medium, design: .rounded)
     }
     // Semantic styles (sizes from Figma)
     static var price: Font { sen(19.3, bold: true) }

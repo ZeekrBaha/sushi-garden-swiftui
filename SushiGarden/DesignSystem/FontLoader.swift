@@ -8,7 +8,7 @@ enum FontLoader {
     /// Bundle.main/<bundle>/Fonts/<name>.ttf — we locate them via the folder URL.
     static func registerAll() {
         guard let fontsFolder = Bundle.main.url(forResource: "Fonts", withExtension: nil) else { return }
-        for name in ["Sen-Regular", "Sen-Bold", "Mugesta"] {
+        for name in ["Sen-Regular", "Sen-Bold"] {
             let url = fontsFolder.appendingPathComponent("\(name).ttf")
             guard FileManager.default.fileExists(atPath: url.path) else { continue }
             CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)

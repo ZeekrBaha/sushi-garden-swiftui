@@ -23,6 +23,11 @@ final class RootTabBarController: UITabBarController {
         tabBar.barTintColor = UIColor(AppColor.tabBar)
         tabBar.tintColor = .white
         tabBar.unselectedItemTintColor = UIColor(AppColor.inactive)
+
+        if let arg = ProcessInfo.processInfo.arguments.first(where: { $0.hasPrefix("-START_TAB=") }),
+           let idx = Int(arg.dropFirst("-START_TAB=".count)) {
+            selectedIndex = idx
+        }
     }
 
     required init?(coder: NSCoder) { fatalError() }
