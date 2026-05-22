@@ -71,13 +71,19 @@ struct AuthContainerView: View {
                             }
                         }
                     }) {
-                        Text(Strings.Auth.login.uppercased())
-                            .font(AppFont.sen(15, bold: true))
-                            .foregroundStyle(.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 56)
-                            .background(AppColor.accent)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        ZStack {
+                            if vm.isLoading {
+                                ProgressView().tint(.white)
+                            } else {
+                                Text((vm.mode == .login ? Strings.Auth.login : Strings.Auth.register).uppercased())
+                                    .font(AppFont.sen(15, bold: true))
+                                    .foregroundStyle(.white)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 56)
+                        .background(AppColor.accent)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     .disabled(!vm.canSubmit)
                     .opacity(vm.canSubmit ? 1 : 0.95)

@@ -17,7 +17,10 @@ final class Dependencies {
         if uiTest {
             let seeded = launchArguments.contains("-SEEDED_AUTH")
                 ? UserProfile(id: "u1", name: "Александр Новиков", email: "a@b.ru") : nil
-            self.auth = FakeAuthService(seeded: seeded)
+            let shouldFail = launchArguments.contains("-UITEST_AUTH_FAIL")
+            self.auth = FakeAuthService(seeded: seeded, shouldFail: shouldFail)
+            // Reset persisted UI state for clean test runs
+            UserDefaults.standard.removeObject(forKey: "sg.profile.phone")
         } else {
             self.auth = FirebaseAuthService()
         }

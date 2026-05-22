@@ -15,11 +15,17 @@ final class AuthViewModel: ObservableObject {
     private let auth: AuthService
     init(auth: AuthService, mode: Mode) { self.auth = auth; self.mode = mode }
 
+    var isLoading: Bool {
+        if case .loading = state { return true }
+        return false
+    }
+
     var canSubmit: Bool {
+        guard !isLoading else { return false }
         let base = FieldValidators.isValidEmail(email) && FieldValidators.isValidPassword(password)
         switch mode {
         case .login: return base
-        case .register: return base && FieldValidators.isNonEmpty(name)
+        case .register: return base && FieldValidators.isNonEmpty(name) && consent
         }
     }
 

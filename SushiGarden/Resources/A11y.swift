@@ -33,6 +33,9 @@ enum A11y {
         static let checkout = "cart.checkout"
         static let total = "cart.total"
         static func addon(_ id: String) -> String { "cart.addon.\(id)" }
+        static func increment(_ id: String) -> String { "cart.item.\(id).increment" }
+        static func decrement(_ id: String) -> String { "cart.item.\(id).decrement" }
+        static func quantity(_ id: String) -> String { "cart.item.\(id).qty" }
     }
     enum Checkout {
         static let name = "checkout.name"
@@ -41,6 +44,15 @@ enum A11y {
         static let confirm = "checkout.confirm"
     }
     enum Tracking { static let map = "tracking.map"; static let courier = "tracking.courier" }
-    enum Orders { static let list = "orders.list"; static let empty = "orders.empty" }
-    enum Profile { static let logout = "profile.logout"; static let name = "profile.name" }
+    enum Orders {
+        static let list = "orders.list"
+        static let empty = "orders.empty"
+        static let detailList = "orders.detail.list"
+        static func detailLine(_ name: String) -> String { "orders.detail.line.\(name)" }
+    }
+    enum Profile {
+        static let logout = "profile.logout"
+        static let name = "profile.name"
+        static let phone = "profile.phone"
+    }
 }

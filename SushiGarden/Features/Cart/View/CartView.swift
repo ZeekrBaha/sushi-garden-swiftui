@@ -47,9 +47,15 @@ struct CartView: View {
             }
             Spacer()
             HStack(spacing: Spacing.md) {
-                Button("−") { vm.decrement(item) }.font(AppFont.mugesta(20))
-                Text("\(item.quantity)").foregroundStyle(.white)
-                Button("+") { vm.increment(item) }.font(AppFont.mugesta(20))
+                Button("−") { vm.decrement(item) }
+                    .font(AppFont.mugesta(20))
+                    .accessibilityIdentifier(A11y.Cart.decrement(item.product.id))
+                Text("\(item.quantity)")
+                    .foregroundStyle(.white)
+                    .accessibilityIdentifier(A11y.Cart.quantity(item.product.id))
+                Button("+") { vm.increment(item) }
+                    .font(AppFont.mugesta(20))
+                    .accessibilityIdentifier(A11y.Cart.increment(item.product.id))
             }.foregroundStyle(.white)
         }
     }
