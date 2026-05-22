@@ -22,17 +22,20 @@ struct OrdersView: View {
                     ScrollView {
                         LazyVStack(spacing: 0) {
                             ForEach(vm.orders) { o in
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(Strings.Orders.row(String(o.id.prefix(6))))
-                                        .font(AppFont.productTitle)
-                                        .foregroundStyle(.white)
-                                    Text("\(o.totalRub) \(Strings.currency)")
-                                        .foregroundStyle(AppColor.textSecondary)
+                                NavigationLink(destination: OrderDetailView(order: o)) {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(Strings.Orders.row(String(o.id.prefix(6))))
+                                            .font(AppFont.productTitle)
+                                            .foregroundStyle(.white)
+                                        Text("\(o.totalRub) \(Strings.currency)")
+                                            .foregroundStyle(AppColor.textSecondary)
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.horizontal, Spacing.screenMargin)
+                                    .padding(.vertical, Spacing.sm)
+                                    .background(AppColor.tabBar)
                                 }
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.horizontal, Spacing.screenMargin)
-                                .padding(.vertical, Spacing.sm)
-                                .background(AppColor.tabBar)
+                                .buttonStyle(.plain)
                             }
                         }
                         .accessibilityElement(children: .contain)

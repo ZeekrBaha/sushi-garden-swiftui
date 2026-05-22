@@ -10,4 +10,41 @@ final class FirebaseAuthErrorMappingTests: XCTestCase {
         let ns = NSError(domain: "FIRAuthErrorDomain", code: 17020) // network
         XCTAssertEqual(FirebaseAuthService.map(ns), .network)
     }
+
+    func test_signIn_throwsUnknown_whenFirebaseNotConfigured() async {
+        let svc = FirebaseAuthService()
+        do {
+            _ = try await svc.signIn(email: "a@b.ru", password: "123456")
+            XCTFail("expected throw")
+        } catch let e as AuthError {
+            if case .unknown(let msg) = e {
+                XCTAssertEqual(msg, "firebase-not-configured")
+            } else {
+                XCTFail("expected .unknown, got \(e)")
+            }
+        } catch {
+            XCTFail("expected AuthError, got \(error)")
+        }
+    }
+
+    func test_signUp_throwsUnknown_whenFirebaseNotConfigured() async {
+        let svc = FirebaseAuthService()
+        do {
+            _ = try await svc.signUp(email: "a@b.ru", password: "123456", name: "Test")
+            XCTFail("expected throw")
+        } catch let e as AuthError {
+            if case .unknown(let msg) = e {
+                XCTAssertEqual(msg, "firebase-not-configured")
+            } else {
+                XCTFail("expected .unknown, got \(e)")
+            }
+        } catch {
+            XCTFail("expected AuthError, got \(error)")
+        }
+    }
+
+    func test_signOut_doesNotThrow_whenFirebaseNotConfigured() {
+        let svc = FirebaseAuthService()
+        XCTAssertNoThrow(try svc.signOut())
+    }
 }

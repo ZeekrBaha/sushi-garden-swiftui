@@ -11,6 +11,7 @@ final class FirebaseAuthService: AuthService {
     }
 
     func signUp(email: String, password: String, name: String) async throws -> UserProfile {
+        guard FirebaseApp.app() != nil else { throw AuthError.unknown("firebase-not-configured") }
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             let change = result.user.createProfileChangeRequest()
@@ -21,13 +22,17 @@ final class FirebaseAuthService: AuthService {
     }
 
     func signIn(email: String, password: String) async throws -> UserProfile {
+        guard FirebaseApp.app() != nil else { throw AuthError.unknown("firebase-not-configured") }
         do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             return Self.profile(from: result.user)
         } catch { throw Self.map(error as NSError) }
     }
 
-    func signOut() throws { try Auth.auth().signOut() }
+    func signOut() throws {
+        guard FirebaseApp.app() != nil else { return }
+        try Auth.auth().signOut()
+    }
 
     static func profile(from u: User) -> UserProfile {
         UserProfile(id: u.uid, name: u.displayName ?? "", email: u.email ?? "")

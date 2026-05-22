@@ -43,6 +43,13 @@ struct CheckoutView: View {
                 .padding(.horizontal, Spacing.screenMargin).padding(.top, Spacing.md)
             }
             .navigationDestination(isPresented: $goTracking) { TrackingView(deps: deps) }
+
+            if vm.isLoading {
+                ZStack {
+                    Color.black.opacity(0.4).ignoresSafeArea()
+                    ProgressView().tint(.white).scaleEffect(1.5)
+                }
+            }
         }
         .navigationTitle(Strings.Checkout.address)
         .onChange(of: vm.didConfirm) { _, ok in if ok { goTracking = true } }

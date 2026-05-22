@@ -12,7 +12,7 @@ final class OrderEntity {
     }
 }
 
-struct OrderLine: Codable, Equatable {
+struct OrderLine: Codable, Equatable, Hashable {
     let name: String
     let quantity: Int
     let priceRub: Int
