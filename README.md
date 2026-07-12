@@ -142,20 +142,14 @@ CartService (in-memory, @MainActor)
 ### Test strategy
 
 ```
-Unit tests (57)                    UI tests (11)
-───────────────────────────────    ────────────────────────────
-CartServiceTests                   AuthUITests
-CartViewModelTests                 CatalogUITests
-CheckoutViewModelTests             CartUITests
-OrderStoreTests                    CheckoutUITests
-CourierSimulatorTests              TrackingUITests
-FieldValidatorsTests               OrdersUITests
-AuthViewModelTests
+SushiGardenTests/    21 files, unit — mirrors Features/ + Services/ + SharedModels/
+                      ↑ real SwiftData (inMemory: true), no mocks for storage
 
-                    ↑                         ↑
-              Real SwiftData           FakeAuthService
-              inMemory: true           (-UITEST launch arg)
+SushiGardenUITests/  9 files, UI — mirrors the 6 feature flows
+                      ↑ FakeAuthService swapped in via -UITEST launch arg
 ```
+
+Run `xcodebuild test ...` (below) for the current pass/fail state and exact count — not hardcoded here, since a stale number is worse than no number (this README previously claimed a count that had drifted from reality).
 
 ---
 
@@ -207,7 +201,6 @@ cd sushi-garden-ios
 
 # Add required files (not in repo):
 #   SushiGarden/GoogleService-Info.plist   ← Firebase credentials
-#   SushiGarden/Resources/Fonts/Mugesta.ttf ← licensed font
 
 xcodegen generate          # regenerates SushiGarden.xcodeproj
 open SushiGarden.xcodeproj
@@ -247,4 +240,13 @@ xcodebuild test \
   -destination "platform=iOS Simulator,name=iPhone 16 Pro"
 ```
 
-All 68 tests pass (57 unit + 11 UI).
+80 tests pass (62 unit + 18 UI) — verified on a real iPhone 16 (iOS 18.0) simulator, and enforced in CI (`.github/workflows/ci.yml`: `xcodegen generate` → `swiftlint` → `xcodebuild test`, run fresh from `project.yml` on every push/PR).
+
+---
+
+## Limitations / next steps
+
+- **No real backend.** Menu, promotions, and courier tracking are all fixture/simulated data (`MenuRepository`, `CourierSimulator`) — only auth talks to a real service (Firebase). There's no server for orders/menu to actually persist or sync across devices.
+- **Cart is in-memory; orders are SwiftData.** `CartService` doesn't survive a relaunch, while placed orders do (`OrderStore`) — an intentionally inconsistent persistence story worth unifying if this grows past a demo.
+- **Test hermeticity was fragile until this pass.** `FirebaseAuthErrorMappingTests` depended on whether a real `GoogleService-Info.plist` happened to be present in the working tree rather than an injected state — fixed via dependency injection (see git history), but worth keeping in mind for any future test that touches `FirebaseApp.app()`.
+- **No dependency audit.** Firebase SDK is pinned `from: 11.0.0` (floating minor) with no offline way to check for known vulnerabilities in this review.
