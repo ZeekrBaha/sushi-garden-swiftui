@@ -10,6 +10,7 @@ final class OrderStore: ObservableObject {
     init(inMemory: Bool = false) {
         let config = ModelConfiguration(isStoredInMemoryOnly: inMemory)
         // Force-try: a failed local store is unrecoverable and should crash early.
+        // swiftlint:disable:next force_try
         container = try! ModelContainer(for: OrderEntity.self, configurations: config)
     }
 

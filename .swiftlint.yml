@@ -1,0 +1,8 @@
+excluded:
+  - SushiGarden.xcodeproj
+
+identifier_name:
+  min_length: 1 # `vm` (view model shorthand) and short closure params (`e`,
+                # `u`, `s`, `p`, `t`) are this codebase's established
+                # convention across tight-scope closures — not a mistake to
+                # flag repo-wide.

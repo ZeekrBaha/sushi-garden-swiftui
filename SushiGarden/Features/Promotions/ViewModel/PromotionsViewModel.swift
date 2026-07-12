@@ -10,6 +10,6 @@ struct Banner: Identifiable, Equatable {
 final class PromotionsViewModel: ObservableObject {
     let banners: [Banner] = [
         Banner(id: "b1", imageName: "banner_promo_1"),
-        Banner(id: "b2", imageName: "banner_promo_2"),
+        Banner(id: "b2", imageName: "banner_promo_2")
     ]
 }

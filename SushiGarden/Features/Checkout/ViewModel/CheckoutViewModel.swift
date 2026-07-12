@@ -7,7 +7,7 @@ final class CheckoutViewModel: ObservableObject {
     @Published var email = ""
     @Published private(set) var didConfirm = false
     @Published private(set) var isLoading = false
-    @Published private(set) var errorMessage: String? = nil
+    @Published private(set) var errorMessage: String?
 
     private let cart: CartService
     private let orders: OrderStore

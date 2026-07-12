@@ -18,7 +18,7 @@ final class RootTabBarController: UITabBarController {
             tab(PromotionsView(deps: deps), title: Strings.Tabs.promotions, system: "tag", id: A11y.Tabs.promotions),
             tab(OrdersView(deps: deps), title: Strings.Tabs.orders, system: "clock", id: A11y.Tabs.orders),
             tab(CartView(deps: deps), title: Strings.Tabs.cart, system: "bag", id: A11y.Tabs.cart),
-            tab(ProfileView(deps: deps, user: user, onLogout: onLogout), title: Strings.Tabs.profile, system: "person", id: A11y.Tabs.profile),
+            tab(ProfileView(deps: deps, user: user, onLogout: onLogout), title: Strings.Tabs.profile, system: "person", id: A11y.Tabs.profile)
         ]
         tabBar.barTintColor = UIColor(AppColor.tabBar)
         tabBar.tintColor = .white

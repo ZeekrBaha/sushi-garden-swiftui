@@ -15,7 +15,7 @@ final class MenuRepository {
                     description: "Запечённый ролл с лососем и сыром."),
             Product(id: "osaka", name: "Осака маки", category: .rolls, priceRub: 740,
                     weightGrams: 275, imageName: "product_osaka",
-                    description: "Угорь, огурец, унаги соус."),
+                    description: "Угорь, огурец, унаги соус.")
         ]
         let extra: [Product] = [
             Product(id: "sushi_salmon", name: "Суши с лососем", category: .sushi, priceRub: 120,
@@ -27,13 +27,13 @@ final class MenuRepository {
             Product(id: "salad_chuka", name: "Чука салат", category: .salads, priceRub: 320,
                     weightGrams: 150, imageName: "product_hikari", description: "Водоросли чука."),
             Product(id: "wok_udon", name: "Удон с курицей", category: .wok, priceRub: 450,
-                    weightGrams: 350, imageName: "product_idaho", description: "Удон, курица, овощи."),
+                    weightGrams: 350, imageName: "product_idaho", description: "Удон, курица, овощи.")
         ]
         allProducts = figma + extra
         addOns = [
             AddOn(id: "wasabi", name: "Васаби", priceRub: 60),
             AddOn(id: "ginger", name: "Имбирь", priceRub: 60),
-            AddOn(id: "soy", name: "Соевый соус", priceRub: 60),
+            AddOn(id: "soy", name: "Соевый соус", priceRub: 60)
         ]
     }
 
