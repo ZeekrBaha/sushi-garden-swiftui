@@ -12,7 +12,7 @@ final class FirebaseAuthErrorMappingTests: XCTestCase {
     }
 
     func test_signIn_throwsUnknown_whenFirebaseNotConfigured() async {
-        let svc = FirebaseAuthService()
+        let svc = FirebaseAuthService(isConfigured: { false })
         do {
             _ = try await svc.signIn(email: "a@b.ru", password: "123456")
             XCTFail("expected throw")
@@ -28,7 +28,7 @@ final class FirebaseAuthErrorMappingTests: XCTestCase {
     }
 
     func test_signUp_throwsUnknown_whenFirebaseNotConfigured() async {
-        let svc = FirebaseAuthService()
+        let svc = FirebaseAuthService(isConfigured: { false })
         do {
             _ = try await svc.signUp(email: "a@b.ru", password: "123456", name: "Test")
             XCTFail("expected throw")
@@ -44,7 +44,12 @@ final class FirebaseAuthErrorMappingTests: XCTestCase {
     }
 
     func test_signOut_doesNotThrow_whenFirebaseNotConfigured() {
-        let svc = FirebaseAuthService()
+        let svc = FirebaseAuthService(isConfigured: { false })
         XCTAssertNoThrow(try svc.signOut())
+    }
+
+    func test_currentUser_isNil_whenFirebaseNotConfigured() {
+        let svc = FirebaseAuthService(isConfigured: { false })
+        XCTAssertNil(svc.currentUser)
     }
 }

@@ -3,15 +3,23 @@ import FirebaseAuth
 import FirebaseCore
 
 final class FirebaseAuthService: AuthService {
+    // FirebaseApp.configure() is skipped when GoogleService-Info.plist is absent
+    // (e.g. UI smoke tests) — guard against the resulting crash. Injectable so
+    // tests can exercise the "not configured" path deterministically instead
+    // of depending on whether a real plist happens to sit in the working tree.
+    private let isConfigured: () -> Bool
+
+    init(isConfigured: @escaping () -> Bool = { FirebaseApp.app() != nil }) {
+        self.isConfigured = isConfigured
+    }
+
     var currentUser: UserProfile? {
-        // FirebaseApp.configure() is skipped when GoogleService-Info.plist is absent
-        // (e.g. UI smoke tests). Guard against the resulting crash.
-        guard FirebaseApp.app() != nil else { return nil }
+        guard isConfigured() else { return nil }
         return Auth.auth().currentUser.map { Self.profile(from: $0) }
     }
 
     func signUp(email: String, password: String, name: String) async throws -> UserProfile {
-        guard FirebaseApp.app() != nil else { throw AuthError.unknown("firebase-not-configured") }
+        guard isConfigured() else { throw AuthError.unknown("firebase-not-configured") }
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             let change = result.user.createProfileChangeRequest()
@@ -22,7 +30,7 @@ final class FirebaseAuthService: AuthService {
     }
 
     func signIn(email: String, password: String) async throws -> UserProfile {
-        guard FirebaseApp.app() != nil else { throw AuthError.unknown("firebase-not-configured") }
+        guard isConfigured() else { throw AuthError.unknown("firebase-not-configured") }
         do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             return Self.profile(from: result.user)
@@ -30,7 +38,7 @@ final class FirebaseAuthService: AuthService {
     }
 
     func signOut() throws {
-        guard FirebaseApp.app() != nil else { return }
+        guard isConfigured() else { return }
         try Auth.auth().signOut()
     }
 
